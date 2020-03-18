@@ -1,3 +1,5 @@
+#require 'spec_helper'
+
 class Game
 
   attr_accessor :board, :player_1, :player_2, :winner, :user_input
@@ -24,11 +26,10 @@ class Game
   end
 
   def won?
-    WIN_COMBINATIONS.each do |combination|   #[0,1,2] which is board range (0-8)
+    WIN_COMBINATIONS.each do |combination|
         if @board.cells[combination[0]] == @board.cells[combination[1]] &&
           @board.cells[combination[1]] == @board.cells[combination[2]] &&
           @board.taken?(combination[0]+1)
-          #Need to +1, because #taken? rspec test is working off user_input range (1-9)
           return combination
         end
       end
@@ -41,13 +42,12 @@ class Game
 
   def over?
      (won? || draw?) ? true : false
-     # IF board is not full, game is in progress (FALSE), ELSE, game is over (TRUE)
   end
 
   def winner
     if won?
       combination = won?
-      @board.cells[combination[0]] # X or O
+      @board.cells[combination[0]]
     end
   end
 
